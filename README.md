@@ -138,6 +138,48 @@ esptool.py --port COM3 --baud 115200 write_flash 0x0 tickrmeter_original.bin
 4. The device reboots, connects to WiFi, and begins displaying your portfolio balance
 5. Access the admin panel at the HTTPS URL shown on the e-ink display (username: `admin`, password: same as the AP password from step 1)
 
+## Timezone
+
+The firmware defaults to **America/Chicago (Central Time)** with automatic daylight saving time. To change the timezone, edit these two `#define` lines near the top of [tickrmeter-crypto-com-exchange-portfolio.ino](tickrmeter-crypto-com-exchange-portfolio.ino) (lines 73-75):
+
+```c
+// Timezone: America/Chicago (CST/CDT with automatic DST)
+#define TIMEZONE_POSIX "CST6CDT,M3.2.0,M11.1.0"
+#define TIMEZONE_NAME "CT"
+```
+
+- **`TIMEZONE_POSIX`** -- a POSIX TZ string that tells the ESP32 how to convert UTC to local time, including DST rules
+- **`TIMEZONE_NAME`** -- a short label shown on the e-ink display next to the clock (e.g. "ET", "PT")
+
+After changing these values, recompile and upload the firmware.
+
+### Examples
+
+| Location | `TIMEZONE_POSIX` | `TIMEZONE_NAME` |
+|----------|------------------|-----------------|
+| US Eastern | `"EST5EDT,M3.2.0,M11.1.0"` | `"ET"` |
+| US Central | `"CST6CDT,M3.2.0,M11.1.0"` | `"CT"` |
+| US Mountain | `"MST7MDT,M3.2.0,M11.1.0"` | `"MT"` |
+| US Pacific | `"PST8PDT,M3.2.0,M11.1.0"` | `"PT"` |
+| US Arizona (no DST) | `"MST7"` | `"AZ"` |
+| US Hawaii (no DST) | `"HST10"` | `"HI"` |
+| UK | `"GMT0BST,M3.5.0/1,M10.5.0"` | `"UK"` |
+| Central Europe | `"CET-1CEST,M3.5.0,M10.5.0/3"` | `"CE"` |
+| Japan (no DST) | `"JST-9"` | `"JP"` |
+| Australia Eastern | `"AEST-10AEDT,M10.1.0,M4.1.0/3"` | `"AE"` |
+| India (no DST) | `"IST-5:30"` | `"IN"` |
+
+### POSIX TZ format
+
+The general format is `STDoffset[DST[offset],start,end]` where:
+
+- **STD** -- standard time abbreviation (e.g. `CST`)
+- **offset** -- hours behind UTC (positive = west, negative = east)
+- **DST** -- daylight time abbreviation (e.g. `CDT`); omit everything after the offset for zones without DST
+- **start,end** -- DST transition rules in `M`*month*`.`*week*`.`*day*` format (month 1-12, week 1-5 where 5 = last, day 0 = Sunday)
+
+A full list of POSIX TZ strings is available at [github.com/nayarsystems/posix_tz_db](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv).
+
 ## Admin Panel
 
 The admin panel is served over HTTPS on port 443 with the following tabs:
