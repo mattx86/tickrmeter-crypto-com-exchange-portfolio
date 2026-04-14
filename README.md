@@ -52,7 +52,7 @@ Create a **read-only** API key at [Crypto.com Exchange](https://crypto.com/excha
 
 You will need to solder pin headers to two locations on the TickrMeter board. Insert the pins with the **long side sticking upward** and the **black plastic base resting on the top of the board** (short pins poke through to the bottom).
 
-**Serial header** -- vertical row of 6 pin holes (from bottom to top):
+**Serial header** -- vertical row of 6 pin holes (from bottom to top, as labeled on bottom of board):
 
 | Pin | Function |
 |-----|----------|
@@ -63,7 +63,7 @@ You will need to solder pin headers to two locations on the TickrMeter board. In
 | RST | Reset (do not connect to FT232) |
 | IO0 | Boot mode select (do not connect to FT232) |
 
-**FLASH header** -- separate pair of 2 pin holes labeled FLASH.
+**FLASH header** -- separate pair of 2 pin holes labeled FLASH (labeled on the bottom of the board).
 
 ### USB-to-Serial Adapter
 
