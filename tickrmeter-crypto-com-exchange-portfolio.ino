@@ -1237,7 +1237,7 @@ void checkSerialCommand() {
 //  E-INK DISPLAY
 // ===========================================================================
 void showSetupScreen() {
-  display.setRotation(1);
+  display.setRotation(3);
   display.setFullWindow();
   display.fillScreen(EPD_WHITE);
   display.setFont(&FreeSansBold18pt7b);
@@ -1256,7 +1256,7 @@ void showSetupScreen() {
 
 // Update the status line on the boot splash (redraws full screen with new status)
 void showSplashStatus(const char* line1, const char* line2) {
-  display.setRotation(1);
+  display.setRotation(3);
   display.setFullWindow();
   display.fillScreen(EPD_WHITE);
   display.setFont(&FreeSans9pt7b);
@@ -1295,7 +1295,7 @@ void updateDisplay() {
     adminUrl = "https://<unknown>/";
   }
 
-  display.setRotation(1);
+  display.setRotation(3);
   display.setFullWindow();
 
   // Draw to buffer (full-height buffer = single page, no paging loop needed)
@@ -1385,7 +1385,7 @@ void setup() {
 
   hspi.begin(EPD_CLK, -1, EPD_DIN, -1);
   display.begin(hspi, SPISettings(4000000, MSBFIRST, SPI_MODE0));
-  display.setRotation(1);
+  display.setRotation(3);
   display.clearScreen();  // one-time full refresh to initialize e-ink particles
 
   loadConfig();
